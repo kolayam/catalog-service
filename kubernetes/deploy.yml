@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalog-service
+  name: catalog-service-srdc
   namespace: nimble-platform
   labels:
     app: nimble-platform
@@ -9,14 +9,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: catalog-service
+      app: catalog-service-srdc
   template:
     metadata:
       labels:
-        app: catalog-service
+        app: catalog-service-srdc
     spec:
       containers:
-        - name: catalog-service
+        - name: catalog-service-srdc
           image: 'rannybal2024/catalog-service:IMAGE_TAG'
           ports:
             - containerPort: 8095
