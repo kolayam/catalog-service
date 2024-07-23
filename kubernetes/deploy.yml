@@ -111,6 +111,8 @@ spec:
               value: 'true'
             - name: DISCOVERY_ENABLED
               value: 'true'
+            - name: EUREKA_CLIENT_HEALTHCHECK
+              value: 'false'
             - name: DISCOVERY_PREFER_IP
               value: 'false'
             - name: DISCOVERY_SERVER_URI
