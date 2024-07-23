@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: catalog-service-srdc
-          image: 'rannybal2024/catalog-service-srdc:IMAGE_TAG'
+          image: 'rannybal2024/catalog-service:IMAGE_TAG'
           ports:
             - containerPort: 8095
               protocol: TCP
