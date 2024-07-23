@@ -26,9 +26,9 @@ spec:
             - name: INDEXING_SERVICE_URL
               value: 'http://indexing-service:8080/'
             - name: CATALOG_SERVICE_OAUTH_CLIENT_ID
-              value: catalog-service-srdc-client
+              value: catalog-service-client
             - name: CATALOG_SERVICE_OAUTH_SECRET
-              value: 3ee23df3-9a8b-4edb-aac1-faf5017cda2d
+              value: 09eae741-0684-4798-b728-aa6a8e59ca71
             - name: OAUTH_CLIENT_ACCESSTOKEN_URI
               value: >-
                 http://keycloak:8080/auth/realms/master/protocol/openid-connect/token
@@ -100,7 +100,7 @@ spec:
             - name: BP_SERVICE_OAUTH_CLIENT_ID
               value: bp-service-client
             - name: BP_SERVICE_OAUTH_SECRET
-              value: 9570fee1-f7a2-4922-890d-5f48cb4664c4
+              value: 621c1ec2-6753-4ead-925f-a5df24876a2b
             - name: IDENTITY_SERVICE_URL
               value: 'http://identity-service:9096/'
             - name: TRUST_SERVICE_URL
@@ -126,7 +126,7 @@ spec:
             - name: KAFKA_TOPIC_BUSINESS_PROCESS_UPDATES
             - name: KEYCLOAK_PUBLIC_KEY
               value: >-
-                MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg99CjKcp4Lm28juVmoe8nitA4yRdDOvQO5kzhPmUCSut9yyAYlJt9JNOFJMRs3zJoEd2JzpI9gBrQYWAQ8q/Uf13lQHDYPQATBdGt+eI7a0Cxl/NGRAOap56yg1KwWs89EIaTiAdQNiWLWXUAm5xA6MGEevBj/azbMofBpf4wjtJ6bFAEa5KGrfEuzMTxiWHNiM8F0ow17STJx5s/T+wqw6qZ+pK6pE1DvbZ0KDOyLCwBvYAMwd7tw5jmSjMnlOn3k1SoCDv9kt8/UL6AJMXMTQZFsyPuthPA/XidRlJCRGaoiNByfSoQExtlO5PkFeDy1vBsqRTL3cpIbVeDsP+JQIDAQAB
+                MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjbTzPIh+ff5lTVW0c4veuS3Ers+29+h9mXXcwkojaDRwzHmf1ZCVvJY3eNy6NCu0SwVksA2tusBZK+qiSo4Kk24DDTNz1JQ7HDvXzTxH6Vfz8vPC9qq+kOPBqUOXctlNTiyz+8uEA6rS1ZpzcbVOdds0xx9k0pSlZhXxbeJlq+m8nS5cWNiAMnS4Z0UQDJXNL5Y8a4z8XTPlX5cv9B2cikQpQ97grnUQ1ihAs+7gw6Jo1DyU+6V1KEYK89yPtn8bSvsgVSIx0g97kBS7c2EhmqBgQ5h5zXW7nLXTiNE+va7Gk0Bfaf6jw5j8p5/uigrRlmgoTQxvgE7oiviJA18ZTQIDAQAB
           resources:
             limits:
               memory: 2000Mi
