@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: catalog-service
+  name: catalog-service-srdc
   namespace: nimble-platform
   labels:
     app: nimble-platform
@@ -9,15 +9,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: catalog-service
+      app: catalog-service-srdc
   template:
     metadata:
       labels:
-        app: catalog-service
+        app: catalog-service-srdc
     spec:
       containers:
-        - name: catalog-service
-          image: 'rannybal2024/catalog-service:IMAGE_TAG'
+        - name: catalog-service-srdc
+          image: 'rannybal2024/catalog-service-srdc:IMAGE_TAG'
           ports:
             - containerPort: 8095
               protocol: TCP
@@ -26,7 +26,7 @@ spec:
             - name: INDEXING_SERVICE_URL
               value: 'http://indexing-service:8080/'
             - name: CATALOG_SERVICE_OAUTH_CLIENT_ID
-              value: catalog-service-client
+              value: catalog-service-srdc-client
             - name: CATALOG_SERVICE_OAUTH_SECRET
               value: 3ee23df3-9a8b-4edb-aac1-faf5017cda2d
             - name: OAUTH_CLIENT_ACCESSTOKEN_URI
