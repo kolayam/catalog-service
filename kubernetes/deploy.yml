@@ -23,11 +23,11 @@ spec:
               protocol: TCP
           env:
             - name: HMRC_API_BASE
-              value: 'https://test-api.service.hmrc.gov.uk'
+              value: 'https://api.service.hmrc.gov.uk'
             - name: HMRC_CLIENT_ID
-              value: 'KR1e3MJmEh0GkCrJflvZ6vh50WnR'
+              value: 'jdasIzzRLEfbF1q2avZNzihifonz'
             - name: HMRC_CLIENT_SECRET
-              value: '821f50ca-4ae1-40cc-9f3e-eb0856b8c4ad'
+              value: '35551566-84fe-49ae-aa5d-ac77ac6e6ee0'
             - name: CATALOGUE_SERVICE_URL
             - name: INDEXING_SERVICE_URL
               value: 'http://indexing-service:8080/'
