@@ -39,6 +39,8 @@ public class VatController {
 
     private static Logger log = LoggerFactory.getLogger(VatController.class);
 
+    @Autowired
+    private HmrcOauthService hmrcOauthService;
 
     @CrossOrigin(origins = {"*"})
     @ApiOperation(value = "", notes = "Gets all the catalogue identifiers from the item index and clear all data in the index")
@@ -55,7 +57,6 @@ public class VatController {
         Map<String, Object> map = new HashMap<>();
         try {
 
-            HmrcOauthService hmrcOauthService = new HmrcOauthService();
             OAuthJSONAccessTokenResponse tokenResponse = hmrcOauthService.getTokenByClientCredential();
             System.out.println(tokenResponse.getAccessToken());
             CloseableHttpClient httpClient = HttpClients.createDefault();

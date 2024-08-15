@@ -179,6 +179,8 @@ public class CataloguePersistenceUtil {
     public static boolean checkCatalogueForWhiteBlackList(String catalogueUuid, ExecutionContext executionContext) {
         // retrieve the catalogue provider id
         String catalogueProviderId = getCatalogueProviderId(catalogueUuid);
+        System.out.println("catalogueProviderId:" + catalogueProviderId);
+        System.out.println("executionContext:" + executionContext);
         // the users who own the catalogue can access it
         // skip this check for the anonymous users because they do not have any company id
         if(executionContext.getCompanyId() != null && catalogueProviderId.contentEquals(executionContext.getCompanyId())){
