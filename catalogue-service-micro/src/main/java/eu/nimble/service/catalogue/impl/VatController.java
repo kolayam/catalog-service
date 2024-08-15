@@ -47,27 +47,26 @@ public class VatController {
             @ApiResponse(code = 401, message = "Invalid token. No user was found for the provided token"),
             @ApiResponse(code = 500, message = "Failed to delete content in the index")
     })
-    @RequestMapping(value = "/catalogue/vat/validate",
+    @RequestMapping(value = "/vat/validate/{vrn}",
             produces = {"application/json"},
             method = RequestMethod.GET)
-    public ResponseEntity<Map<String, Object>> clearItemIndex(@ApiParam(value = "The Bearer token provided by the identity service", required = true) @RequestHeader(value = "Authorization", required = true) String bearerToken) {
+    public ResponseEntity<Map<String, Object>> clearItemIndex(@PathVariable String vrn,@ApiParam(value = "The Bearer token provided by the identity service", required = true) @RequestHeader(value = "Authorization", required = true) String bearerToken) {
 
         Map<String, Object> map = new HashMap<>();
         try {
-            JsonNode jsonNode = new ObjectMapper().readTree("");
-
-            log.info("Completed request to clear the item index");
 
             HmrcOauthService hmrcOauthService = new HmrcOauthService();
             OAuthJSONAccessTokenResponse tokenResponse = hmrcOauthService.getTokenByClientCredential();
             System.out.println(tokenResponse.getAccessToken());
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpUriRequest request = new HttpGet(String.join("",  "https://api.service.hmrc.gov.uk/organisations/vat/check-vat-number/lookup/","220430231"));
+            HttpUriRequest request = new HttpGet(String.join("",  hmrcOauthService.getBaseUrl(),"/organisations/vat/check-vat-number/lookup/",vrn));
             request.setHeader("Authorization", "Bearer " + tokenResponse.getAccessToken());
 
             CloseableHttpResponse response = httpClient.execute(request);
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 System.out.println(EntityUtils.toString(response.getEntity()));
+                JsonNode jsonNode = new ObjectMapper().readTree(EntityUtils.toString(response.getEntity()));
+
                 map.put("IsValid",true);
                 map.put("BusinessName",jsonNode.path("target").get("name").asText());
             }else{

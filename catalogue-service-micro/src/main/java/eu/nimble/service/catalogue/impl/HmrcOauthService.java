@@ -33,6 +33,17 @@ public class HmrcOauthService {
 		this.oAuthClient = new OAuthClient(new URLConnectionClient());
 	}
 
+	public String getClientId() {
+		return clientId;
+	}
+
+	public String getClientSecret() {
+		return clientSecret;
+	}
+
+	public String getBaseUrl() {
+		return baseUrl;
+	}
 
 	public OAuthJSONAccessTokenResponse getTokenByClientCredential() {
 		try {
