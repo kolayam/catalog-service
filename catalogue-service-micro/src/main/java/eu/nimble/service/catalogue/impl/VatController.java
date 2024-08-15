@@ -65,8 +65,9 @@ public class VatController {
 
             CloseableHttpResponse response = httpClient.execute(request);
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                System.out.println(EntityUtils.toString(response.getEntity()));
-                JsonNode jsonNode = new ObjectMapper().readTree(EntityUtils.toString(response.getEntity()));
+                String res = EntityUtils.toString(response.getEntity());
+                System.out.println(res);
+                JsonNode jsonNode = new ObjectMapper().readTree(res);
 
                 map.put("IsValid",true);
                 map.put("BusinessName",jsonNode.path("target").get("name").asText());
