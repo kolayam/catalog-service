@@ -201,6 +201,11 @@ nimble:
   # the list of available languages for catalogue service
   languages: ${CATALOG_SERVICE_LANGUAGES:en,es}
 
+hmrc:
+  api-base: {HMRC_API_BASE}
+  client-id: {HMRC_CLIENT_ID}
+  client-secret: {HMRC_CLIENT_SECRET}
+
 # hystrix settings
 hystrix:
   command:
