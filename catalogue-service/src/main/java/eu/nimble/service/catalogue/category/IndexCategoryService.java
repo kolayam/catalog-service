@@ -209,6 +209,7 @@ public class IndexCategoryService {
 
         List<String> namespaces = new ArrayList<>();
         taxonomyIds.forEach(taxonomyId -> namespaces.add(SpringBridge.getInstance().getTaxonomyManager().getTaxonomiesMap().get(taxonomyId).getTaxonomy().getNamespace()));
+        System.out.println("namespaces: " + namespaces);
         List<Category> categories = new ArrayList<>();
         for (String namespace : namespaces) {
             facetCriteria.put(IConcept.NAME_SPACE_FIELD, "\"" + namespace + "\"");

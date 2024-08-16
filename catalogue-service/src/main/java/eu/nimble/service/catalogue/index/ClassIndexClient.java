@@ -201,7 +201,7 @@ public class ClassIndexClient {
                     params.add(e.getKey() + ":" + e.getValue());
                 }
             }
-
+            System.out.println("params : " + params);
             response = indexingClientController.getNimbleIndexClient().selectClass(credentialsUtil.getBearerToken(),Integer.toString(Integer.MAX_VALUE),query,params);
 
             if (response.status() == HttpStatus.OK.value()) {
@@ -236,7 +236,7 @@ public class ClassIndexClient {
             logger.error(msg,e);
             throw new RuntimeException(msg,e);
         }
-
+        System.out.println("catalog responseBody: "+ responseBody + "query "+ query);
         try {
             searchResult = mapper.readValue(responseBody, new TypeReference<SearchResult<ClassType>>() {});
             indexCategories = searchResult.getResult();
