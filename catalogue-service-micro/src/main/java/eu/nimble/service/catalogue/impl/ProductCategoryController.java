@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Product category related REST services
@@ -189,7 +190,8 @@ public class ProductCategoryController {
         String requestLog = String.format("Incoming request to get root categories for taxonomies: %s", taxonomyIds);
         log.info(requestLog);
         executionContext.setRequestLog(requestLog);
-
+        List<String> aaa = SpringBridge.getInstance().getTaxonomyManager().getTaxonomiesMap().values().stream().map(m->m.getTaxonomy().getId()).collect(Collectors.toList());
+        log.info(String.join("-","taxonomyIds,taxonomyIdExists",taxonomyIds.toString(),aaa.toString()));
         for (String taxonomyId : taxonomyIds) {
             if(!taxonomyIdExists(taxonomyId)){
                 throw new NimbleException(NimbleExceptionMessageCode.BAD_REQUEST_INVALID_TAXONOMY.toString(), Collections.singletonList(taxonomyId));
