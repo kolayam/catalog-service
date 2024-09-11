@@ -1,5 +1,6 @@
 package eu.nimble.service.catalogue.index;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.nimble.common.rest.indexing.IIndexingServiceClient;
@@ -132,7 +133,7 @@ public class ClassIndexClient {
                 queryStr.append("id:\"").append(uri).append("\" OR ");
             }
             Search search = new Search();
-            search.setRows(Integer.MAX_VALUE);
+            search.setRows(Integer.MAX_VALUE-100);
             search.setStart(0);
             search.setQuery(queryStr.substring(0, queryStr.length()-3));
 
@@ -140,7 +141,7 @@ public class ClassIndexClient {
 
             if (response.status() == HttpStatus.OK.value()) {
                 indexCategories = extractIndexCategoriesFromSearchResults(response, uris.toString());
-
+                System.out.println("indexCategories%%%%%%%%%%"+new ObjectMapper().writeValueAsString(indexCategories));
                 // cache the categories
                 for (ClassType indexCategory : indexCategories) {
                     categoryCache.put(indexCategory.getUri(),indexCategory);
@@ -185,10 +186,24 @@ public class ClassIndexClient {
 
     public List<Category> getCategories(Set<String> uris, boolean populateProperties) {
         List<ClassType> indexCategories = getIndexCategories(uris);
+        try {
+            System.out.println("indexCategories!!!!!!"+new ObjectMapper().writeValueAsString(indexCategories));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         List<Category> categories = IndexingWrapper.toCategories(indexCategories);
-
+        try {
+            System.out.println("categories!!!!!!"+new ObjectMapper().writeValueAsString(categories));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         if(populateProperties) {
             Map<String, List<Property>> categoryProperties = propertyIndexClient.getIndexPropertiesForIndexCategories(indexCategories);
+            try {
+                System.out.println("categoryProperties!!!!!!"+new ObjectMapper().writeValueAsString(categoryProperties));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
             for(Category category : categories) {
                 category.setProperties(categoryProperties.get(category.getCategoryUri()));
             }
