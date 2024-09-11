@@ -210,7 +210,9 @@ public class ClassIndexClient {
 
             if (response.status() == HttpStatus.OK.value()) {
                 List<ClassType> indexCategories = extractIndexCategoriesFromSearchResults(response, query);
+                System.out.println("indexCategories*******" + new ObjectMapper().writeValueAsString(indexCategories));
                 List<Category> categories = IndexingWrapper.toCategories(indexCategories);
+                System.out.println("categories*******" + new ObjectMapper().writeValueAsString(categories));
                 return categories;
 
             } else {
