@@ -246,6 +246,7 @@ public class ClassIndexClient {
         try {
             searchResult = mapper.readValue(responseBody, new TypeReference<SearchResult<ClassType>>() {});
             indexCategories = searchResult.getResult();
+            System.out.println("indexCategories&&&&&&&&&&&: "+ new ObjectMapper().writeValueAsString(indexCategories));
             return indexCategories;
 
         } catch (IOException e) {
