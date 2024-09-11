@@ -12,6 +12,7 @@ import eu.nimble.service.catalogue.util.SpringBridge;
 import eu.nimble.service.model.solr.Search;
 import eu.nimble.service.model.solr.SearchResult;
 import eu.nimble.service.model.solr.owl.ClassType;
+import eu.nimble.service.model.solr.owl.Concept;
 import eu.nimble.service.model.solr.owl.PropertyType;
 import eu.nimble.utility.JsonSerializationUtility;
 import feign.Response;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by suat on 28-Jan-19.
@@ -167,8 +169,10 @@ public class ClassIndexClient {
         //populate properties
         if(CollectionUtils.isNotEmpty(indexCategory.getProperties())) {
             List<PropertyType> indexProperties = propertyIndexClient.getIndexPropertiesForCategory(uri);
+            System.out.println("indexProperties----------"+indexProperties.stream().map(Concept::getUri).collect(Collectors.toList()));
 //            List<PropertyType> indexProperties = propertyIndexClient.getProperties(new HashSet<>(indexCategory.getProperties()));
             List<Property> properties = IndexingWrapper.toProperties(indexProperties);
+            System.out.println("properties----------"+properties.stream().map(Property::getUri).collect(Collectors.toList()));
             category.setProperties(properties);
         }
         return category;
