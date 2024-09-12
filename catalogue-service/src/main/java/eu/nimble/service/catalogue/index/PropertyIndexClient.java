@@ -208,7 +208,7 @@ public class PropertyIndexClient {
             System.out.println("extractIndexPropertiesFromSearchResults-indexProperties:"+new ObjectMapper().writeValueAsString(indexProperties));
             // filter properties so that only datatype properties and properties that are visible (PropertyType.isVisible) on the UI are included
             indexProperties = indexProperties.stream()
-                    .filter(indexProperty -> indexProperty.isVisible() &&
+                    .filter(indexProperty ->
                             (indexProperty.getPropertyType().contentEquals("DatatypeProperty") || indexProperty.getPropertyType().contentEquals("FunctionalProperty")) )
                     .collect(Collectors.toList());
             return indexProperties;
