@@ -14,8 +14,9 @@ import java.util.Map;
 public class EClassTaxonomyQueryImpl implements TaxonomyQueryInterface {
 
     public static final String id = "eClass";
-    public static final String namespace = "http://www.nimble-project.org/resource/eclass#";
-
+//    public static final String namespace = "http://www.nimble-project.org/resource/eclass#";
+    public static final String namespace = "http://www.ebusiness-unibw.org/ontologies/eclass/5.1.4/#";
+//    public static final String eClassNamespace="http://www.ebusiness-unibw.org/ontologies/eclass/5.1.4/#";
     private Taxonomy taxonomy;
 
     public EClassTaxonomyQueryImpl(Taxonomy taxonomy) {
@@ -31,12 +32,12 @@ public class EClassTaxonomyQueryImpl implements TaxonomyQueryInterface {
     public Map<String, String> getLogisticsServices() {
         Map<String,String> logisticServiceCategoryUriMap = new HashMap<>();
 
-        logisticServiceCategoryUriMap.put("MARITIMETRANSPORT", "http://www.nimble-project.org/resource/eclass#0173-1#01-AAB379#014");
-        logisticServiceCategoryUriMap.put("AIRTRANSPORT", "http://www.nimble-project.org/resource/eclass#0173-1#01-ADU384#007");
-        logisticServiceCategoryUriMap.put("RAILTRANSPORT", "http://www.nimble-project.org/resource/eclass#0173-1#01-AAB365#013");
-        logisticServiceCategoryUriMap.put("WAREHOUSING", "http://www.nimble-project.org/resource/eclass#0173-1#01-ADU628#007");
-        logisticServiceCategoryUriMap.put("ORDERPICKING", "http://www.nimble-project.org/resource/eclass#0173-1#01-AKG236#013");
-        logisticServiceCategoryUriMap.put("LOGISTICSCONSULTANCY", "http://www.nimble-project.org/resource/eclass#0173-1#01-BAC130#011");
+        logisticServiceCategoryUriMap.put("MARITIMETRANSPORT", namespace+"0173-1#01-AAB379#014");
+        logisticServiceCategoryUriMap.put("AIRTRANSPORT", namespace+"0173-1#01-ADU384#007");
+        logisticServiceCategoryUriMap.put("RAILTRANSPORT", namespace+"0173-1#01-AAB365#013");
+        logisticServiceCategoryUriMap.put("WAREHOUSING", namespace+"0173-1#01-ADU628#007");
+        logisticServiceCategoryUriMap.put("ORDERPICKING", namespace+"0173-1#01-AKG236#013");
+        logisticServiceCategoryUriMap.put("LOGISTICSCONSULTANCY", namespace+"0173-1#01-BAC130#011");
 
         return logisticServiceCategoryUriMap;
     }
