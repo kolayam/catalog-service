@@ -271,11 +271,13 @@ public class IndexingWrapper {
         Category category = new Category();
         // this distinction is made in order not to break the functionality in the UI. Codes of eClass concetps are
         // being used in the UI
-        if(indexCategory.getUri().startsWith(EClassTaxonomyQueryImpl.namespace)) {
-            category.setCode(indexCategory.getCode());
-        } else {
-            category.setCode(indexCategory.getLocalName());
-        }
+        // if(indexCategory.getUri().startsWith(EClassTaxonomyQueryImpl.namespace)) {
+        //     category.setCode(indexCategory.getCode());
+        // } else {
+        //     category.setCode(indexCategory.getLocalName());
+        // }
+
+        category.setCode(indexCategory.getLocalName());
         category.setId(indexCategory.getUri());
         category.setDefinition(getLabelListFromMap(indexCategory.getDescription()));
         category.setPreferredName(getLabelListFromMap(indexCategory.getLabel()));
