@@ -26,13 +26,13 @@ spring:
   datasource:
     # database to store product and catalogue information
     ubldb:
-      url: jdbc:postgresql://${UBL_DB_HOST}:${UBL_DB_HOST_PORT}/${UBL_DB_NAME}?currentSchema=public&ApplicationName=catalogue-service-ubldb${UBL_DB_PARAMS}
+      url: jdbc:postgresql://${UBL_DB_HOST}:${UBL_DB_HOST_PORT}/${UBL_DB_NAME}?ApplicationName=catalogue-service-ubldb${UBL_DB_PARAMS}
       username: ${UBL_DB_USERNAME}
       password: ${UBL_DB_PASSWORD}
       driver-class: org.postgresql.Driver
     # database to store binary contents of products
     binarycontentdb:
-      url: jdbc:postgresql://${BINARY_CONTENT_DB_HOST}:${BINARY_CONTENT_DB_PORT}/${BINARY_CONTENT_DB_NAME}?currentSchema=public&ApplicationName=catalogue-service-binarycontentdb${BINARY_CONTENT_DB_PARAMS}
+      url: jdbc:postgresql://${BINARY_CONTENT_DB_HOST}:${BINARY_CONTENT_DB_PORT}/${BINARY_CONTENT_DB_NAME}?ApplicationName=catalogue-service-binarycontentdb${BINARY_CONTENT_DB_PARAMS}
       username: ${BINARY_CONTENT_DB_USERNAME}
       password: ${BINARY_CONTENT_DB_PASSWORD}
       driver-class: org.postgresql.Driver
