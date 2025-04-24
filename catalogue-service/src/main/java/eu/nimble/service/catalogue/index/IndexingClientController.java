@@ -2,6 +2,7 @@ package eu.nimble.service.catalogue.index;
 
 import eu.nimble.common.rest.indexing.IIndexingServiceClient;
 import eu.nimble.common.rest.indexing.IIndexingServiceClientFallback;
+import feign.Request;
 import feign.Retryer;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
@@ -11,6 +12,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.feign.support.SpringMvcContract;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+
+import com.netflix.hystrix.HystrixCommand;
+import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandKey;
+import com.netflix.hystrix.HystrixCommandProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +43,6 @@ public class IndexingClientController {
     @Value("${federated-index-platform-name}")
     private String federatedIndexPlatformName;
 
-
     @Autowired
     IIndexingServiceClientFallback indexingFallback;
 
@@ -55,7 +60,6 @@ public class IndexingClientController {
         }
         return nimbleIndexClient;
     }
-
 
     public IIndexingServiceClient getFederatedIndexClient() {
         if (federatedIndexEnabled && federatedIndexClient == null) {
@@ -79,7 +83,26 @@ public class IndexingClientController {
         return HystrixFeign.builder().contract(new SpringMvcContract())
                 .encoder(new Encoder.Default())
                 .decoder(new Decoder.Default())
-                .retryer(new Retryer.Default(1,100,3))
+                .retryer(new Retryer.Default(1, 100, 3))
+                .setterFactory((target, method) -> {
+                    // 为每个方法创建Hystrix配置
+                    String groupKey = target.name();
+                    String commandKey = groupKey + "#" + method.getName();
+
+                    return HystrixCommand.Setter
+                            .withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey))
+                            .andCommandKey(HystrixCommandKey.Factory.asKey(commandKey))
+                            .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
+                                    .withExecutionTimeoutInMilliseconds(300000) // 30秒超时
+                                    .withExecutionIsolationStrategy(
+                                            HystrixCommandProperties.ExecutionIsolationStrategy.THREAD)
+                                    .withCircuitBreakerEnabled(true) // 启用熔断
+                                    .withCircuitBreakerRequestVolumeThreshold(50) // 20个请求
+                                    .withCircuitBreakerErrorThresholdPercentage(50) // 错误率50%
+                                    .withCircuitBreakerSleepWindowInMilliseconds(5000) // 熔断5秒
+                    );
+                })
+                .options(new Request.Options(50000, 1800000)) // 连接5秒，读取25秒
                 .target(IIndexingServiceClient.class, url, indexingFallback);
     }
 
