@@ -141,7 +141,6 @@ public class ClassIndexClient {
 
             if (response.status() == HttpStatus.OK.value()) {
                 indexCategories = extractIndexCategoriesFromSearchResults(response, uris.toString());
-                System.out.println("indexCategories%%%%%%%%%%"+new ObjectMapper().writeValueAsString(indexCategories));
                 // cache the categories
                 for (ClassType indexCategory : indexCategories) {
                     categoryCache.put(indexCategory.getUri(),indexCategory);
@@ -170,10 +169,8 @@ public class ClassIndexClient {
         //populate properties
         if(CollectionUtils.isNotEmpty(indexCategory.getProperties())) {
             List<PropertyType> indexProperties = propertyIndexClient.getIndexPropertiesForCategory(uri);
-            System.out.println("indexProperties----------"+indexProperties.stream().map(Concept::getUri).collect(Collectors.toList()));
 //            List<PropertyType> indexProperties = propertyIndexClient.getProperties(new HashSet<>(indexCategory.getProperties()));
             List<Property> properties = IndexingWrapper.toProperties(indexProperties);
-            System.out.println("properties----------"+properties.stream().map(Property::getUri).collect(Collectors.toList()));
             category.setProperties(properties);
         }
         return category;
@@ -186,24 +183,9 @@ public class ClassIndexClient {
 
     public List<Category> getCategories(Set<String> uris, boolean populateProperties) {
         List<ClassType> indexCategories = getIndexCategories(uris);
-        try {
-            System.out.println("indexCategories!!!!!!"+new ObjectMapper().writeValueAsString(indexCategories));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
         List<Category> categories = IndexingWrapper.toCategories(indexCategories);
-        try {
-            System.out.println("categories!!!!!!"+new ObjectMapper().writeValueAsString(categories));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
         if(populateProperties) {
             Map<String, List<Property>> categoryProperties = propertyIndexClient.getIndexPropertiesForIndexCategories(indexCategories);
-            try {
-                System.out.println("categoryProperties!!!!!!"+new ObjectMapper().writeValueAsString(categoryProperties));
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
             for(Category category : categories) {
                 category.setProperties(categoryProperties.get(category.getCategoryUri()));
             }
@@ -225,9 +207,7 @@ public class ClassIndexClient {
 
             if (response.status() == HttpStatus.OK.value()) {
                 List<ClassType> indexCategories = extractIndexCategoriesFromSearchResults(response, query);
-                System.out.println("indexCategories*******" + new ObjectMapper().writeValueAsString(indexCategories));
                 List<Category> categories = IndexingWrapper.toCategories(indexCategories);
-                System.out.println("categories*******" + new ObjectMapper().writeValueAsString(categories));
                 return categories;
 
             } else {
@@ -257,11 +237,9 @@ public class ClassIndexClient {
             logger.error(msg,e);
             throw new RuntimeException(msg,e);
         }
-        System.out.println("catalog responseBody: "+ responseBody + "query "+ query);
         try {
             searchResult = mapper.readValue(responseBody, new TypeReference<SearchResult<ClassType>>() {});
             indexCategories = searchResult.getResult();
-            System.out.println("indexCategories&&&&&&&&&&&: "+ new ObjectMapper().writeValueAsString(indexCategories));
             return indexCategories;
 
         } catch (IOException e) {
