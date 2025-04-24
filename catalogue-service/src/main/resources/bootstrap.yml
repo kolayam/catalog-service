@@ -206,6 +206,14 @@ hmrc:
   client-id: {HMRC_CLIENT_ID}
   client-secret: {HMRC_CLIENT_SECRET}
 
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 30000    # 连接超时30秒
+        readTimeout: 1200000     # 读取超时20分钟（需>实际耗时）
+        maxInMemorySize: 100MB    # 允许大响应体（默认1MB会OOM）
+
 # hystrix settings
 hystrix:
   command:
@@ -213,11 +221,16 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 300000
+            timeoutInMilliseconds: 1800000
   threadpool:
     default:
       coreSize: 175
       maxQueueSize: -1
+      
+ribbon:
+  ConnectTimeout: 30000          # 与Feign一致
+  ReadTimeout: 1200000           # 与Feign一致
+  OkToRetryOnAllOperations: false # 非GET请求禁用重试
 
 ################################################################################################
 ################################## KUBERNETES CONFIG ###########################################
