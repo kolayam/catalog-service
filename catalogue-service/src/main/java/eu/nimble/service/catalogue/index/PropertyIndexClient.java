@@ -104,7 +104,7 @@ public class PropertyIndexClient {
         try {
             Set<String> urisSet = new HashSet<>(categoryUris);
             Response response = indexingClientController.getNimbleIndexClient().getProperties(credentialsUtil.getBearerToken(),null,urisSet);
-
+            logger.info("response back: "+ response);
             if (response.status() == HttpStatus.OK.value()) {
                 List<PropertyType> properties = extractIndexPropertiesFromSearchResults(response, categoryUris.toString());
                 logger.debug("Retrieved properties for categories: {}", categoryUris);
